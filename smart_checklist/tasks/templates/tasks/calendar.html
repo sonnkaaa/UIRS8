@@ -1,0 +1,64 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<h2>Календарь задач</h2>
+
+<!-- Подключение FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+
+<!-- Подключение FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+
+<!-- Контейнер для календаря -->
+<div id="calendar" style="margin-top: 20px; min-height: 600px;"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'ru',
+        initialView: 'dayGridMonth',  // Вид календаря по умолчанию
+        editable: true,
+        events: '/api/events/',  // Сюда будет подгружаться список задач
+        eventDrop: function(info) {
+            // Обновление события, когда оно перемещается
+            fetch('/api/update-task-date/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    id: info.event.id,
+                    new_date: info.event.startStr
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    alert("Ошибка при обновлении даты");
+                    info.revert(); // Откат действия
+                }
+            });
+        }
+    });
+    calendar.render();  // Отображение календаря
+
+    // Функция для получения CSRF токена
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+
+{% endblock %}

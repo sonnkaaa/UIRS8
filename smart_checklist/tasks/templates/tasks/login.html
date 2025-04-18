@@ -1,0 +1,26 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+    <div class="card p-4 shadow-sm">
+        <h2 class="mb-4 text-center">Вход</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" placeholder="Имя пользователя" required id="id_username">
+            </div>
+
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Пароль" required id="id_password">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Войти</button>
+        </form>
+
+        <p class="mt-3 text-center">
+            Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

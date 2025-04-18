@@ -1,0 +1,44 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Настройки пользователя</h2>
+
+<!-- Форма изменения имени пользователя -->
+<form method="POST" class="card p-4 shadow-sm mb-4">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="user_form">
+
+    <h5 class="mb-3">Имя пользователя</h5>
+    <div class="mb-3">
+        {{ user_form.username.label_tag }}
+        {{ user_form.username }}
+        {% if user_form.username.errors %}
+            <div class="text-danger mt-1">{{ user_form.username.errors }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Сохранить имя</button>
+</form>
+
+<!-- Форма смены пароля -->
+<form method="POST" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="password_form">
+
+    <h5 class="mb-3">Смена пароля</h5>
+    {% for field in password_form %}
+        <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+                <div class="text-danger mt-1">{{ field.errors }}</div>
+            {% endif %}
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary w-100">Сменить пароль</button>
+</form>
+{% endblock %}

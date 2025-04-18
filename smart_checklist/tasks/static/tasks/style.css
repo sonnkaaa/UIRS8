@@ -1,0 +1,92 @@
+/* Стили для страницы */
+html, body {
+    height: 100%;  /* Устанавливаем высоту на всю страницу */
+    margin: 0;  /* Убираем отступы */
+}
+
+/* Используем Flexbox для управления расположением контента */
+body {
+    display: flex;
+    flex-direction: column;  /* Размещаем элементы по вертикали */
+    justify-content: space-between;  /* Распределяем контент по вертикали */
+    min-height: 100vh;  /* Гарантируем, что body занимает всю высоту */
+}
+
+/* Основной контейнер для контента */
+.container {
+    flex: 1;  /* Это позволяет контейнеру занимать оставшееся пространство */
+}
+
+/* Стили для хедера */
+header {
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+}
+
+header .navbar-nav .nav-link {
+    color: white;
+}
+
+header .navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+/* Стили для календаря */
+#calendar {
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 600px;
+}
+
+/* Кнопка "Выйти" */
+.btn-link {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    color: #007bff;
+}
+
+/* Футер будет закреплен внизу */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 100%;  /* Футер растягивается на всю ширину */
+    margin-top: auto;  /* Это гарантирует, что футер будет внизу */
+}
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+/* Увеличим поля ввода для удобства */
+.form-control, .form-select {
+    height: 40px;
+    font-size: 16px;
+}
+
+/* Добавим плавные переходы для поля при фокусе */
+.form-control:focus, .form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Стиль для кнопки */
+.btn-success {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.fixed-width {
+    width: 300px;
+    max-width: 100%;
+}
+.form-control, .form-select {
+    height: 40px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+}

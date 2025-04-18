@@ -1,0 +1,31 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<h2>Редактировать задачу для проекта: {{ task.project.name }}</h2>
+
+<form method="POST" class="card p-4 shadow-sm">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="id_title" class="form-label">Заголовок задачи</label>
+        {{ form.title }} <!-- Теперь форма автоматически имеет нужные классы -->
+    </div>
+
+    <div class="mb-3">
+        <label for="id_description" class="form-label">Описание</label>
+        {{ form.description }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_due_date" class="form-label">Дата завершения</label>
+        {{ form.due_date }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_priority" class="form-label">Приоритет</label>
+        {{ form.priority }}
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Сохранить</button>
+</form>
+{% endblock %}

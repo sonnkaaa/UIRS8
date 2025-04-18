@@ -1,0 +1,93 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Левая колонка — проекты -->
+    <div class="col-md-4">
+        <h4>Мои проекты</h4>
+        <ul class="list-group mb-3">
+            {% for project in projects %}
+                <a href="?project={{ project.id }}" class="list-group-item list-group-item-action {% if selected_project and project.id == selected_project.id %}active{% endif %}">
+                    {{ project.name }}
+                </a>
+            {% endfor %}
+        </ul>
+
+        <form method="post" class="card p-3 border">
+            {% csrf_token %}
+            <label for="id_name">Имя проекта</label>
+            {{ project_form.name }}
+            <button type="submit" class="btn btn-sm btn-success mt-2">+ Добавить проект</button>
+        </form>
+        <hr>
+        <a href="{% url 'calendar' %}" class="btn btn-outline-primary w-100">📅 Календарь</a>
+    </div>
+
+    <!-- Правая колонка — задачи проекта -->
+    <div class="col-md-8">
+        {% if selected_project %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>
+    Задачи проекта:
+    <a href="{% url 'project_detail' selected_project.id %}">
+        {{ selected_project.name }}
+    </a>
+</h4>
+
+                <a href="{% url 'add_task' selected_project.id %}" class="btn btn-primary btn-sm">+ Задача</a>
+            </div>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Задача</th>
+                        <th>Дедлайн</th>
+                        <th>Описание</th>
+                        <th>Приоритет</th>
+                        <th></th>  <!-- Пустой столбец для кнопки -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>
+                                {{ task.title }}<br>
+                                <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-secondary mt-1">✏️ Редактировать</a>
+                            </td>
+                            <td>{{ task.due_date }}</td>
+                            <td>
+                                {% if task.description %}
+                                    {{ task.description }}
+                                {% else %}
+                                    <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if task.priority == 'low' %}
+                                    <span class="text-success">Низкий</span>
+                                {% elif task.priority == 'medium' %}
+                                    <span class="text-warning">Средний</span>
+                                {% elif task.priority == 'high' %}
+                                    <span class="text-danger fw-bold">Высокий</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <!-- Иконка для завершения задачи -->
+                                <form method="POST" action="{% url 'complete_task' task.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-success p-0" title="Завершить задачу">
+                                        <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #28a745;"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="5">Задач пока нет</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-muted">Выберите проект слева, чтобы увидеть задачи.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyc.*
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+static_root/
+local_settings.py
+
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.*
+
+# Migrations (можно оставить в Git, если хочешь)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# pytest
+.cache/
+.coverage
+htmlcov/
+*.cover
+
+# mypy
+.mypy_cache/
+.dmypy.json
+.pyre/
