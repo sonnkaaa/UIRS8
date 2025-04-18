@@ -27,11 +27,10 @@ local_settings.py
 .DS_Store
 Thumbs.db
 
-# Environment variables
+
 .env
 .env.*
 
-# Migrations (можно оставить в Git, если хочешь)
 **/migrations/*.pyc
 **/migrations/__pycache__/
 
